@@ -5,7 +5,7 @@
 VERSION=
 
 CC=			gcc
-CFLAGS=		-g -Wall $(VERSION) -O2
+CFLAGS=		-g -Wall $(VERSION) -O2 -I/research/cxs1031/include -I/research/cxs1031/include/ncurses -L /research/cxs1031/lib
 #LDFLAGS=		-Wl,-rpath,\$$ORIGIN/../lib
 DFLAGS=		-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_USE_KNETFILE -D_CURSES_LIB=1
 KNETFILE_O=	knetfile.o
@@ -21,7 +21,7 @@ PROG=		samtools
 INCLUDES=	-I.
 SUBDIRS=	. bcftools misc
 LIBPATH=
-LIBCURSES=	-lcurses # -lXCurses
+LIBCURSES=	-lncurses # -lXCurses
 
 
 .SUFFIXES:.c .o
