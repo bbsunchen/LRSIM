@@ -577,8 +577,8 @@ PARAMETER
             }
 
             #Output
-            print $outputfh "$filePosToExtract\t".(join "", @selectedBarcodeAry)."\t".(join "", @barcodeQualAry)."\n";
-
+            print $outputfh "$filePosToExtract\t".(join "", @selectedBarcodeAry)."\t".(join "", @barcodeQualAry)."\t"."$j\n";
+            
             --$readsCountDown;
             if($readsCountDown % 100000 == 0)
             { &Log("$readsCountDown reads remaining"); }

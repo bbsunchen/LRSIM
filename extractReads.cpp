@@ -65,6 +65,7 @@ int main(int argc, char **argv)
   while(!feof(manifestIFH))
   {
     size_t filePosition; char bcSeq[1024]; char bcQual[1024];
+    char bcMolecule[1024];
     {
       char buf[1024];
       int len;
@@ -75,10 +76,11 @@ int main(int argc, char **argv)
         buf[ strlen(buf) - 1 ] = '\0';
       } else { continue; }
       vector<string> ary = SplitString(buf);
-      if(ary.size() != 3) {fprintf(stderr, "%s, manifest file columns != 3, program terminated\n", buf);exit(EXIT_FAILURE);}
+      if(ary.size() != 4) {fprintf(stderr, "%s, manifest file columns != 4, program terminated\n", buf);exit(EXIT_FAILURE);} 
       filePosition = strtoul(ary[0].c_str(), NULL, 0);
       strcpy(bcSeq, ary[1].c_str());
       strcpy(bcQual, ary[2].c_str());
+      strcpy(bcMolecule, ary[3].c_str());
     }
     
     //Go to the position
@@ -107,9 +109,9 @@ int main(int argc, char **argv)
     //Output
     {
       buf1[strcspn(buf1, "\r\n")] = 0;
-      fprintf(fq1OFH, "%s 1:N:0:1\n%s%s%s%s%s", buf1, bcSeq, buf2, buf3, bcQual, buf4);
+      fprintf(fq1OFH, "%s 1:N:0:1 MI:%s\n%s%s%s%s%s", buf1, bcMolecule, bcSeq, buf2, buf3, bcQual, buf4);
       buf5[strcspn(buf5, "\r\n")] = 0;
-      fprintf(fq2OFH, "%s 2:N:0:1\n%s%s%s", buf5, buf6, buf7, buf8);
+      fprintf(fq2OFH, "%s 2:N:0:1 MI:%s\n%s%s%s", buf5, bcMolecule, buf6, buf7, buf8);
       ++count;
       if(count % 100000 == 0)
       {
